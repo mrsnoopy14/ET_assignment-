@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Outputs / artifacts
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Office temp files
+~$*.xlsx
+
+# Provided reference docs (keep local; avoid pushing to public repos)
+*.pdf
+*.xlsx
