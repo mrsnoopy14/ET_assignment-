@@ -4,7 +4,7 @@ This repo contains:
 - A Python thermal resistance-network model derived from the provided reference.
 - Validation against the provided Excel reference workbook.
 - A Flask API wrapper for programmatic use.
-- Written responses in `submission_responses.md`.
+- Written responses in `submission_responses_Q1-Q5.md`.
 
 ## Quick start
 
