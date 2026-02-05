@@ -73,10 +73,23 @@ Default solver call:
 curl http://127.0.0.1:3000/solve/default
 ```
 
+Note (Windows PowerShell): `curl` may be an alias for `Invoke-WebRequest`. If you hit issues, use either:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:3000/solve/default
+```
+
 POST JSON to solver:
 
 ```bash
 curl -X POST http://127.0.0.1:3000/solve -H "Content-Type: application/json" -d @node-service/sample_request.json
+```
+
+PowerShell equivalent:
+
+```powershell
+$body = Get-Content node-service/sample_request.json -Raw
+Invoke-RestMethod http://127.0.0.1:3000/solve -Method Post -ContentType 'application/json' -Body $body
 ```
 
 Optional: override the solver URL if you change the Flask port:
@@ -91,8 +104,8 @@ npm start
 - `src/thermal_model.py` – core thermal model
 - `src/app.py` – Flask API
 - `validate_against_excel.py` – Excel validation script
-- `out/show_results.json` – latest run snapshot (local output)
-- `submission_responses.md` – written answers
+- `show_results.py` – writes a Python-vs-Excel snapshot to `out/show_results.json`
+- `submission_responses_Q1-Q5.md` – written answers
 
 ## Note on provided files
 The PDFs/XLSX references are treated as local inputs and are ignored by `.gitignore` by default to avoid accidentally publishing proprietary content.
