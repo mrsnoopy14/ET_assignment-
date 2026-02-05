@@ -45,6 +45,24 @@ curl -X POST http://127.0.0.1:5000/thermal -H "Content-Type: application/json" -
 
 The challenge add-on is implemented in `node-service/`. It runs locally and forwards JSON requests to the Flask solver.
 
+### One-command demo (recommended for screenshots)
+
+From the repo root:
+
+```powershell
+npm --prefix .\node-service install
+python -m pip install -r requirements.txt
+./run_demo_end_to_end.ps1
+```
+
+This writes:
+- `out/node_demo_default.json`
+- `out/node_demo_post.json`
+
+If anything fails, check:
+- `out/flask_stderr.log`
+- `out/node_stderr.log`
+
 ### 1) Start the Python solver
 
 In one terminal:
@@ -61,6 +79,12 @@ In a second terminal:
 cd node-service
 npm install
 npm start
+```
+
+Alternative (from repo root):
+
+```bash
+node server.js
 ```
 
 By default it calls `http://127.0.0.1:5000/thermal`.

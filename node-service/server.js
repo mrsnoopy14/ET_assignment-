@@ -1,9 +1,14 @@
 const express = require('express');
 
+const fetchImpl =
+  global.fetch ||
+  ((...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args)));
+
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '127.0.0.1';
 const SOLVER_URL = process.env.SOLVER_URL || 'http://127.0.0.1:5000/thermal';
 
 app.get('/', (_req, res) => {
@@ -17,7 +22,7 @@ app.get('/', (_req, res) => {
 // Calls the Python solver with default inputs (GET /thermal)
 app.get('/solve/default', async (_req, res) => {
   try {
-    const response = await fetch(SOLVER_URL, { method: 'GET' });
+    const response = await fetchImpl(SOLVER_URL, { method: 'GET' });
     const text = await response.text();
 
     // Pass through status code + JSON if possible
@@ -42,7 +47,7 @@ app.get('/solve/default', async (_req, res) => {
 // Forwards JSON body to Python solver (POST /thermal)
 app.post('/solve', async (req, res) => {
   try {
-    const response = await fetch(SOLVER_URL, {
+    const response = await fetchImpl(SOLVER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(req.body || {})
@@ -68,7 +73,7 @@ app.post('/solve', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Node service listening on http://127.0.0.1:${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Node service listening on http://${HOST}:${PORT}`);
   console.log(`Forwarding solver calls to: ${SOLVER_URL}`);
 });

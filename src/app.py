@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import fields
+import os
 from typing import Any
 
 from flask import Flask, jsonify, request
@@ -47,4 +48,7 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    host = os.environ.get("HOST", "127.0.0.1")
+    port = int(os.environ.get("PORT", "5000"))
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host=host, port=port, debug=debug, use_reloader=False)
