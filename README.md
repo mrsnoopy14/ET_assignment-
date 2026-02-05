@@ -41,6 +41,51 @@ Example:
 curl -X POST http://127.0.0.1:5000/thermal -H "Content-Type: application/json" -d "{\"air_velocity_m_s\": 2.0}"
 ```
 
+## Local Node.js service (calls Python solver API)
+
+The challenge add-on is implemented in `node-service/`. It runs locally and forwards JSON requests to the Flask solver.
+
+### 1) Start the Python solver
+
+In one terminal:
+
+```bash
+python src/app.py
+```
+
+### 2) Start the Node service
+
+In a second terminal:
+
+```bash
+cd node-service
+npm install
+npm start
+```
+
+By default it calls `http://127.0.0.1:5000/thermal`.
+
+### 3) Test (for screenshots)
+
+Default solver call:
+
+```bash
+curl http://127.0.0.1:3000/solve/default
+```
+
+POST JSON to solver:
+
+```bash
+curl -X POST http://127.0.0.1:3000/solve -H "Content-Type: application/json" -d @node-service/sample_request.json
+```
+
+Optional: override the solver URL if you change the Flask port:
+
+```bash
+set SOLVER_URL=http://127.0.0.1:5000/thermal
+npm start
+```
+
 ## Project layout
 
 - `src/thermal_model.py` – core thermal model

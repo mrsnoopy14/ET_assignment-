@@ -10,6 +10,9 @@ venv/
 # VS Code
 .vscode/
 
+# Node
+node_modules/
+
 # Outputs / artifacts
 out/
 
